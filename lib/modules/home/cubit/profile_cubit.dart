@@ -40,7 +40,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   ];
 
   final _profileService = ProfileService();
+  final formInterestKey = GlobalKey<FormState>();
   bool isEditing = false;
+  bool isAdding = false;
 
   DateTime? dateSelected;
   String? monthSelected;
@@ -53,9 +55,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController zodiacController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
-  TextEditingController interestController = TextEditingController();
+  TextEditingController interestsController = TextEditingController();
 
   double? heightAbout = 0;
+  double? heightInterest = 0;
 
   ProfileModel? dataProfile;
 
@@ -80,6 +83,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     weightController = dataProfile?.data?.height != null
         ? TextEditingController(text: '${dataProfile?.data?.weight}')
         : TextEditingController();
+    interestSelected = dataProfile?.data?.interests;
   }
 
   String? convertIntMonth() {
@@ -139,17 +143,20 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> createProfile() async {
     emit(OnLoadingCreateProfile());
+
+    final param = ProfileParamModel(
+      weight: int.parse(weightController.text),
+      height: int.parse(heightController.text),
+      birthday:
+          "${birthdayController.text.split('/').first} ${convertStringMonth()} ${birthdayController.text.split('/').last}",
+      name: displayNameController.text.isEmpty
+          ? dataProfile?.data?.name ?? ''
+          : displayNameController.text,
+      interest: interestSelected ?? [],
+    );
+
     var res = await _profileService.createProfile(
-      param: ProfileParamModel(
-        weight: int.parse(weightController.text),
-        height: int.parse(heightController.text),
-        birthday:
-            "${birthdayController.text.split('/').first} ${convertStringMonth()} ${birthdayController.text.split('/').last}",
-        name: displayNameController.text.isEmpty
-            ? dataProfile?.data?.name ?? ''
-            : displayNameController.text,
-        interest: dataProfile?.data?.interests ?? [],
-      ),
+      param: param,
     );
 
     dataProfile = ProfileModel.fromJson(res.data);
@@ -170,7 +177,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         birthday:
             "${birthdayController.text.split('/').first} ${convertStringMonth()} ${birthdayController.text.split('/').last}",
         name: dataProfile?.data?.name ?? '',
-        interest: dataProfile?.data?.interests ?? [],
+        interest: interestSelected ?? [],
       ),
     );
 

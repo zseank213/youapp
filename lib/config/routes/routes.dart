@@ -4,6 +4,7 @@ import 'package:youapp/lib.dart';
 const routeLogin = "/login";
 const routeHome = "/home";
 const routeRegister = "/register";
+const routeInterests = "/interests";
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {

@@ -22,10 +22,15 @@ const greyPrimaryColor = Color(0xffE5E5E5);
 const backgroundColors0 = Color(0xFF09141A);
 const backgroundColors1 = Color(0xFF5CB85C);
 
-//Text Color
+// Text Color
 const errorTextColor = Color(0xFFED4337);
 const textColor0 = neutral30;
 const textColor1 = Color(0xFF93773E);
+const textColor2 = Color(0xFFABFFFD);
+
+// Card Color
+Color cardColor0 = const Color(0xffFFFFFF).withOpacity(0.05999999865889549);
+Color cardColor1 = const Color(0xFF152229);
 
 const searchBackgroundColor = Color(0xffE5F6F6);
 

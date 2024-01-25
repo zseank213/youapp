@@ -35,43 +35,22 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget renderInterests() {
-    return CardWidget(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Interest",
-                style: textNormal(color: neutral30, isBold: true),
-              ),
-              Image.asset(
-                editIcon,
-              ),
-            ],
-          ),
-          AppDimens.verticalSpace12,
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: List.generate(
-              bloc.dataProfile?.data?.interests?.length ?? 0,
-              (index) => Container(
-                height: 33,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(
-                  bloc.dataProfile?.data?.interests?[index] ?? '',
-                  style: textNormal(color: neutral30, isBold: true),
-                ),
-              ),
-            ),
-          ),
-        ],
+    return InterestWidget(bloc: bloc);
+  }
+
+  Widget renderContent() {
+    return Expanded(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          children: [
+            renderImage(),
+            AppDimens.verticalSpace24,
+            renderAbout(),
+            AppDimens.verticalSpace24,
+            renderInterests(),
+          ],
+        ),
       ),
     );
   }
@@ -90,20 +69,7 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 children: [
                   renderAppBar(),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        children: [
-                          renderImage(),
-                          AppDimens.verticalSpace24,
-                          renderAbout(),
-                          AppDimens.verticalSpace24,
-                          renderInterests(),
-                        ],
-                      ),
-                    ),
-                  )
+                  renderContent(),
                 ],
               ),
             );
