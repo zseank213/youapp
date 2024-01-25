@@ -38,7 +38,7 @@ class ContainerForm extends StatelessWidget {
                 child: body,
               ),
               Positioned(
-                bottom: MediaQuery.of(context).padding.bottom + 40,
+                bottom: MediaQuery.of(context).padding.bottom + 25,
                 right: 20,
                 left: 20,
                 child: bottom ?? Container(),

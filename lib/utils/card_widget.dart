@@ -12,9 +12,9 @@ class CardWidget extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      padding: EdgeInsets.all(14),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Color(0xFF152229),
+        color: const Color(0xFF152229),
         borderRadius: BorderRadius.circular(14),
       ),
       child: child,

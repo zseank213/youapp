@@ -38,8 +38,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
               var token = await SecureStorage.getAccessToken();
 
               if (token != null) {
-                Navigator.pushReplacementNamed(context, routeLogin);
-                // Navigator.pushReplacementNamed(context, routeHome);
+                Navigator.pushReplacementNamed(context, routeHome);
               } else {
                 Navigator.pushReplacementNamed(context, routeLogin);
               }

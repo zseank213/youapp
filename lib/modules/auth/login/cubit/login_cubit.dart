@@ -56,7 +56,5 @@ class LoginCubit extends Cubit<LoginState> {
       errorMessage = '${_data.message}';
       emit(OnErrorLogin(errorMessage: _data.message));
     }
-
-    emit(LoginInitial());
   }
 }

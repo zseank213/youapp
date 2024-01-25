@@ -20,8 +20,10 @@ const greyPrimaryColor = Color(0xffE5E5E5);
 
 // Background
 const backgroundColors0 = Color(0xFF09141A);
+const backgroundColors1 = Color(0xFF5CB85C);
 
 //Text Color
+const errorTextColor = Color(0xFFED4337);
 const textColor0 = neutral30;
 const textColor1 = Color(0xFF93773E);
 

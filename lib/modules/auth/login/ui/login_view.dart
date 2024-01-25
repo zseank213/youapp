@@ -45,7 +45,6 @@ class _LoginViewState extends State<LoginView> {
               if (cubit.errorMessage != '') cubit.errorMessage = '';
             });
           },
-          haveTittle: false,
           validator: (value) {
             if (cubit.errorMessage != '' && cubit.errorMessage != 'Incorrect password') {
               return cubit.errorMessage;
@@ -64,7 +63,6 @@ class _LoginViewState extends State<LoginView> {
         ),
         tittleAndTextField(
           controller: cubit.passwordController,
-          haveTittle: false,
           isPassword: cubit.isPassword,
           style: textNormal(color: neutral30),
           onChange: (value) {
@@ -106,54 +104,55 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget renderButton(BuildContext context) {
+  Widget renderButton(BuildContext context, bool isNotEmpty) {
     return ButtonWidget(
       text: "Login",
       onTap: () {
         if (cubit.formKey.currentState!.validate()) {
+          FocusScope.of(context).unfocus();
           cubit.post();
         }
       },
-      isDisable: cubit.emailController.text.isNotEmpty && cubit.passwordController.text.isNotEmpty,
-      hasShadow: cubit.emailController.text.isNotEmpty && cubit.passwordController.text.isNotEmpty,
+      isDisable: isNotEmpty,
+      hasShadow: isNotEmpty,
       isLoading: cubit.isLoading,
     );
   }
 
-  Widget renderScreen(BuildContext context) {
+  Widget renderScreen(BuildContext context, bool isNotEmpty) {
     return ContainerForm(
       body: BlocProvider(
         create: (context) => cubit,
-        child: BlocConsumer<LoginCubit, LoginState>(
+        child: BlocListener<LoginCubit, LoginState>(
           listener: (cLogin, sLogin) {
             if (sLogin is OnSuccessLogin) {
               Navigator.pushReplacementNamed(context, routeHome);
+            } else {
+              setState(() {});
             }
           },
-          builder: (cLogin, sLogin) {
-            return Form(
-              key: cubit.formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      AppDimens.horizontalSpace12,
-                      Text(
-                        "Login",
-                        style: textXXL(color: neutral30, isBold: true),
-                      ),
-                    ],
-                  ),
-                  AppDimens.verticalSpace18,
-                  renderForm(),
-                  AppDimens.verticalSpace12,
-                  renderButton(context),
-                ],
-              ),
-            );
-          },
+          child: Form(
+            key: cubit.formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    AppDimens.horizontalSpace12,
+                    Text(
+                      "Login",
+                      style: textXXL(color: neutral30, isBold: true),
+                    ),
+                  ],
+                ),
+                AppDimens.verticalSpace18,
+                renderForm(),
+                AppDimens.verticalSpace12,
+                renderButton(context, isNotEmpty),
+              ],
+            ),
+          ),
         ),
       ),
       bottom: renderRegisterButton(),
@@ -162,6 +161,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return renderScreen(context);
+    bool isNotEmpty =
+        cubit.emailController.text.isNotEmpty && cubit.passwordController.text.isNotEmpty;
+    return renderScreen(context, isNotEmpty);
   }
 }

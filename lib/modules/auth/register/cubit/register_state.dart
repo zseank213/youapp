@@ -13,9 +13,9 @@ class OnErrorRegister extends RegisterState {
 }
 
 class OnSuccessRegister extends RegisterState {
-  // final RegisterModel? data;
+  final RegisterModel? data;
 
-  // OnSuccessRegister({this.data});
+  OnSuccessRegister({this.data});
 }
 
 class OnSearchRegister extends RegisterState {}
